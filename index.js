@@ -1,44 +1,85 @@
-const  productos = 
-[
-    {
-        id: 1,
-        nombre: "Combo 1: 1 Fernet + 2 Cocas",
-        precio: 2000
-    },
-    {
-        id: 2,
-        nombre: "Combo 2: 1 Gin + 2 Tonicas",
-        precio: 2200
-    },
-    {
-        id: 3,
-        nombre: "Combo 3: 1 Ron + 2 Cocas",
-        precio: 2500
-    }
-]
+let cart= []
+let showAllProducts = document.getElementById("showAllProducts")
+const div = document.querySelector('.div')
 
-const pedirProd = () => {
-    let idProd = parseInt(prompt("Ingrese el número de combo que quiere:\n1) 1Fernet + 2Cocas\n2) 1Gin + 2Tonicas\n3) 1Ron + 2Cocas"));
-    
-    let cantidad = parseInt(prompt("Ingrese la cantidad que desea comprar:"));
+// Funcion mostrar productos
+function MostrarProductos() {
+    productos.forEach((product) => {
+        let card = document.createElement("div")
+        showAllProducts.append(card)
+        let img = document.createElement("img")
+        img.setAttribute("src", product.img)
+        let name = document.createElement("h3")
+        name.innerText = (product.nombre)
+        let price = document.createElement("p")
+        price.innerText = ("AR$" + product.precio)
+        let buyButton = document.createElement("button")
+        buyButton.innerText = ("Agregar al carrito")
+        card.append(img, name, price, buyButton)
 
-    let idProd2 = parseInt(prompt("Ingrese el número de combo que quiere (en caso de querer otro):\n1) 1Fernet + 2Cocas\n2) 1Gin + 2Tonicas\n3) 1Ron + 2Cocas"));
-    
-    let cantidad2 = parseInt(prompt("Ingrese la cantidad que desea comprar:"));
-
-    let idProd3 = parseInt(prompt("Ingrese el número de combo que quiere (en caso de querer otro):\n1) 1Fernet + 2Cocas\n2) 1Gin + 2Tonicas\n3) 1Ron + 2Cocas"));
-    
-    let cantidad3 = parseInt(prompt("Ingrese la cantidad que desea comprar:"));
-
-    let TotalCombo1 = productos[idProd - 1].precio * cantidad
-
-    let TotalCombo2 = productos[idProd2 - 1].precio * cantidad2
-
-    let TotalCombo3 = productos[idProd3 - 1].precio * cantidad3
-    alert(`El precio del primer combo es AR$${TotalCombo1}`);
-    alert(`El precio del segundo combo es AR$${TotalCombo2}`);
-    alert(`El precio del tercer combo es AR$${TotalCombo3}`);
-    alert(`El precio total es AR$${TotalCombo1 + TotalCombo2 + TotalCombo3}`)
+        buyButton.addEventListener("click", function () {
+            cart.push(product)
+            alert("Agregaste " + product.nombre + " al carrito")
+            div.innerHTML = ``
+            showCart()
+        })
+    })
 }
-pedirProd();
+MostrarProductos()
+// Muestro carrito
+let cartView = document.getElementById("showProductsCart")
+let goToCart = document.getElementById("goToCart")
+let carrito = document.getElementById("cartList")
+const buttonCart = document.getElementById("mostrarCarrito")
+
+let alertCart = document.createElement("h2")
+alertCart.setAttribute("class", "alerta")
+
+if (!cart.lenght) {
+    alertCart.innerText = ("El carrito está vacío")
+    div.append(alertCart)
+}
+function showCart() {
+    alertCart.remove()
+
+    cart.forEach((element) => {
+        const divCart = document.createElement('li')
+        divCart.innerHTML += ` 
+        <img src="${element.img}">
+        <h3>${element.nombre}</h3>
+        <h3>$${element.precio}</h3>
+        <button class="eliminar" data-id=${element.id}>X</button>`
+
+
+        div.appendChild(divCart)
+    })}
+    // Eliminar item del carrito 
+let eliminarItem = document.querySelector(".eliminar")
+
+
+// Calcular total
+const total = cart.map((item) => parseInt(item.precio)).reduce((cartTotalPrice, currentItemPrice) => cartTotalPrice + currentItemPrice, 0);
+console.log(total)
+
+let totalCompra = document.createElement("h4")
+totalCompra.innerText = ("Precio Total: AR$" + total)
+div.append(totalCompra)
+
+//Vaciar todo el carrito //
+let deleteCart = document.createElement("button")
+deleteCart.innerText = ("Vaciar carrito")
+div.append(deleteCart)
+
+deleteCart.onclick = () => {
+ 
+    cart = []
+    div.innerHTML = ``
+    console.log(cart)
+}
+
+
+buttonCart.onclick = () => {
+div.innerHTML = ``    
+showCart()
+}
 
