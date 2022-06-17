@@ -1,7 +1,7 @@
 let cart= []
 let showAllProducts = document.getElementById("showAllProducts")
 const div = document.querySelector('.div')
-
+const div2 = document.querySelector(`#cartList`)
 // Funcion mostrar productos
 function MostrarProductos() {
     productos.forEach((product) => {
@@ -42,33 +42,34 @@ if (!cart.lenght) {
 function showCart() {
     alertCart.remove()
 
-    cart.forEach((element) => {
+    cart.forEach((productos) => {
         const divCart = document.createElement('li')
         divCart.innerHTML += ` 
-        <img src="${element.img}">
-        <h3>${element.nombre}</h3>
-        <h3>$${element.precio}</h3>
-        <button class="eliminar" data-id=${element.id}>X</button>`
+        <img src="${productos.img}">
+        <h3>${productos.nombre}</h3>
+        <h3>$${productos.precio}</h3>
+        <button class="eliminar" data-id=${productos.id}>X</button>`
 
 
         div.appendChild(divCart)
     })}
     // Eliminar item del carrito 
 let eliminarItem = document.querySelector(".eliminar")
+console.log(cart)
 
 
 // Calcular total
-const total = cart.map((item) => parseInt(item.precio)).reduce((cartTotalPrice, currentItemPrice) => cartTotalPrice + currentItemPrice, 0);
+const total = cart.map((item) => parseInt(item.precio)).reduce((cartTotalPrice, ItemPrice) => cartTotalPrice + ItemPrice, 0);
 console.log(total)
 
 let totalCompra = document.createElement("h4")
 totalCompra.innerText = ("Precio Total: AR$" + total)
-div.append(totalCompra)
+div2.append(totalCompra)
 
 //Vaciar todo el carrito //
 let deleteCart = document.createElement("button")
 deleteCart.innerText = ("Vaciar carrito")
-div.append(deleteCart)
+div2.append(deleteCart)
 
 deleteCart.onclick = () => {
  
@@ -82,4 +83,8 @@ buttonCart.onclick = () => {
 div.innerHTML = ``    
 showCart()
 }
+
+// Filtrar resultados
+let InputSearch = document.getElementById("InputSearch")
+let filtrar = document.getElementById("filtrar")
 
