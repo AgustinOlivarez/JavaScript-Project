@@ -53,15 +53,15 @@ function showCart() {
 
         div.appendChild(divCart)
     })}
-    // Eliminar item del carrito 
+    // Eliminar item del carrito  (SIN HACER)
 let eliminarItem = document.querySelector(".eliminar")
 console.log(cart)
 
 
-// Calcular total
-const total = cart.map((item) => parseInt(item.precio)).reduce((cartTotalPrice, ItemPrice) => cartTotalPrice + ItemPrice, 0);
-console.log(total)
-
+// Calcular total (NO FUNCIONA)
+// const total = cart.map((item) => parseInt(item.precio)).reduce((cartTotalPrice, ItemPrice) => cartTotalPrice + ItemPrice, 0);
+// console.log(total)
+const total = cart.reduce
 let totalCompra = document.createElement("h4")
 totalCompra.innerText = ("Precio Total: AR$" + total)
 div2.append(totalCompra)
@@ -88,3 +88,4 @@ showCart()
 let InputSearch = document.getElementById("InputSearch")
 let filtrar = document.getElementById("filtrar")
 
+// terminar filtrado
