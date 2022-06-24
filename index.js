@@ -20,6 +20,9 @@ function MostrarProductos() {
         buyButton.addEventListener("click", function () {
             cart.push(product)
             alert("Agregaste " + product.nombre + " al carrito")
+                let total = cart.reduce((total, item) => total + item.precio, 0);
+                console.log(total)
+                totalCompra.innerText = ("Precio Total: AR$" + total)
             div.innerHTML = ``
             showCart()
         })
@@ -61,10 +64,14 @@ console.log(cart)
 // Calcular total (NO FUNCIONA)
 // const total = cart.map((item) => parseInt(item.precio)).reduce((cartTotalPrice, ItemPrice) => cartTotalPrice + ItemPrice, 0);
 // console.log(total)
-const total = cart.reduce
-let totalCompra = document.createElement("h4")
-totalCompra.innerText = ("Precio Total: AR$" + total)
-div2.append(totalCompra)
+// if(cart != []){
+//     let total = cart.reduce((total, item) => total + item.precio, 0);
+//     console.log(total)
+//     totalCompra.innerText = ("Precio Total: AR$" + total)
+// }
+
+    
+
 
 //Vaciar todo el carrito //
 let deleteCart = document.createElement("button")
