@@ -19,11 +19,24 @@ function MostrarProductos() {
 
         buyButton.addEventListener("click", function () {
             cart.push(product)
-            alert("Agregaste " + product.nombre + " al carrito")
+            sessionStorage.setItem('producto',JSON.stringify(cart))
+            // Suma de cantidad todavia no funciona
+            let existe = cart.some (productos => productos.id === product)
+            if (existe){
+                let product = cart.map (productos => {
+                    if (productos.id === product){
+                        product.cantidad++
+                    }
+                })
+            }
+            else{
+
+                alert("Agregaste " + product.nombre + " al carrito")
                 let total = cart.reduce((total, item) => total + item.precio, 0);
                 console.log(total)
                 totalCompra.innerText = ("Precio Total: AR$" + total)
-            div.innerHTML = ``
+                div.innerHTML = ``
+            }
             showCart()
         })
     })
@@ -51,6 +64,7 @@ function showCart() {
         <img src="${productos.img}">
         <h3>${productos.nombre}</h3>
         <h3>$${productos.precio}</h3>
+        <h3>Cantidad: ${productos.cantidad}</h3>
         <button class="eliminar" data-id=${productos.id}>X</button>`
 
 
@@ -60,17 +74,7 @@ function showCart() {
 let eliminarItem = document.querySelector(".eliminar")
 console.log(cart)
 
-
-// Calcular total (NO FUNCIONA)
-// const total = cart.map((item) => parseInt(item.precio)).reduce((cartTotalPrice, ItemPrice) => cartTotalPrice + ItemPrice, 0);
-// console.log(total)
-// if(cart != []){
-//     let total = cart.reduce((total, item) => total + item.precio, 0);
-//     console.log(total)
-//     totalCompra.innerText = ("Precio Total: AR$" + total)
-// }
-
-    
+   
 
 
 //Vaciar todo el carrito //
@@ -79,10 +83,13 @@ deleteCart.innerText = ("Vaciar carrito")
 div2.append(deleteCart)
 
 deleteCart.onclick = () => {
- 
+    sessionStorage.clear(cart)
     cart = []
     div.innerHTML = ``
     console.log(cart)
+    let total = 0
+    totalCompra.innerText = ("Precio Total: AR$" + total)
+    
 }
 
 
