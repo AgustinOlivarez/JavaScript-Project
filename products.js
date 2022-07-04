@@ -27,5 +27,34 @@ const  productos =
         precio: 1900,
         img: "./IMG/vodka y 2 sprites.jpg",
         cantidad: 1
-    }
+    },
+    {
+        id: "5",
+        nombre: "Combo 5: 6 Pack Andes Rubia 473cc",
+        precio: 1300,
+        img: "./IMG/6Packandesrubia.png",
+        cantidad: 1   
+    },
+    {
+        id: "6",
+        nombre: "Combo 6: 6 Pack Andes IPA 473cc",
+        precio: 1400,
+        img: "./IMG/6Packandesipa.png",
+        cantidad: 1
+    },
+    {
+        id: "7",
+        nombre: "Combo 7: 6 Pack Andes Roja 473cc",
+        precio: 1300,
+        img: "./IMG/6Packandesroja.png",
+        cantidad: 1
+    },
+    {
+        id: "8",
+        nombre: "Combo 8: 6 Pack Andes Negra 473cc",
+        precio: 1400,
+        img: "./IMG/6Packandesnegra.png",
+        cantidad: 1
+    },
+
 ]

@@ -38,6 +38,7 @@ section{
 #showAllProducts div{
     border: solid 5px black;
     padding: 2px;
+    width: 20%;
 }
 #cartList {
     width: 50%;
