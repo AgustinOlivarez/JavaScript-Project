@@ -6,7 +6,9 @@ let showAllProducts = document.getElementById("showAllProducts")
 const div = document.querySelector('.div')
 const div2 = document.querySelector(`#cartList`)
 
-
+if (carritoenSS != []){
+    cart = carritoenSS
+}
 
 
 // Funcion mostrar productos
@@ -77,23 +79,13 @@ function MostrarProductos() {
                     let alertCart = document.createElement("h2")
                     alertCart.setAttribute("class", "alerta")
                     
-                    if (!cart.lenght) {
+                    if (cart = []) {
                         alertCart.innerText = ("El carrito está vacío")
     div.append(alertCart)
 }
 // Pushear localStorage
 function PushStorage(){
 
-        // carritoenSS.forEach((productos) => {
-        //     const divCart = document.createElement('li')
-        //     divCart.innerHTML += ` 
-        //     <img src="${productos.img}">
-        //     <h3>${productos.nombre}</h3>
-        //     <h3>$${productos.precio}</h3>
-        //     <h3>Cantidad: ${productos.cantidad}</h3>
-        //     <button class="eliminar" data-id=${productos.id}>X</button>`
-        //     div.appendChild(divCart)    
-            
             const totalSS = carritoenSS.reduce((totalSS, item) => totalSS + item.precio, 0);
             totalCompra.innerText = ("Precio Total: AR$" + totalSS)
             div.innerHTML = ``
@@ -119,6 +111,7 @@ function showCart() {
             <button class="eliminar" data-id=${productos.id}>X</button>`
             div.appendChild(divCart)
         })
+        carritoenSS != null &&
         carritoenSS.forEach((productos) => {
             const divCart = document.createElement('li')
             divCart.innerHTML += ` 
