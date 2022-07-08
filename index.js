@@ -6,7 +6,7 @@ const div2 = document.querySelector(`#cartList`)
 
 cart = JSON.parse(localStorage.getItem("cart")) || [];
 const AgregarAlCarrito = (product) => {
-    cart.push(product)
+    cart= [...cart, product];
     localStorage.setItem('cart', JSON.stringify(cart))
     console.log(cart)
     console.log(JSON.parse(localStorage.getItem('cart')));
@@ -71,10 +71,6 @@ function MostrarProductos() {
  let alertCart = document.createElement("h2")
  alertCart.setAttribute("class", "alerta")
  
- // if (cart = []) {
-     //  alertCart.innerText = ("El carrito está vacío")
-     //  div.append(alertCart)
-//  }
 
 // Cargar items de elementos en Storage
 function LoadStorage(){
@@ -94,14 +90,14 @@ function LoadStorage(){
 
 function showCart() {
     alertCart.remove()
-    cart.forEach((productos) => {
+    cart.forEach(({id, nombre, precio, img, cantidad}) => {
         const divCart = document.createElement('li')
         divCart.innerHTML += ` 
-        <img src="${productos.img}">
-            <h3>${productos.nombre}</h3>
-            <h3>$${productos.precio}</h3>
-            <h3>Cantidad: ${productos.cantidad}</h3>
-            <button class="eliminar" data-id=${productos.id}>X</button>`
+        <img src="${img}">
+            <h3>${nombre}</h3>
+            <h3>$${precio}</h3>
+            <h3>Cantidad: ${cantidad}</h3>
+            <button class="eliminar" data-id=${id}>X</button>`
             div.appendChild(divCart)
         })
     }
