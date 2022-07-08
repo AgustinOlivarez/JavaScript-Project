@@ -3,9 +3,9 @@ let showAllProducts = document.getElementById("showAllProducts")
 const div = document.querySelector('.div')
 const div2 = document.querySelector(`#cartList`)
 
+
 cart = JSON.parse(localStorage.getItem("cart")) || [];
-const funcion = (product) => {
-    alert("Agregaste " + product.nombre + " al carrito")
+const AgregarAlCarrito = (product) => {
     cart.push(product)
     localStorage.setItem('cart', JSON.stringify(cart))
     console.log(cart)
@@ -28,15 +28,28 @@ function MostrarProductos() {
         card.append(img, name, price, buyButton)
         
             buyButton.addEventListener("click", () => {
-                funcion(product)
+                Swal.fire({
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                      },
+                      hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                      },
+                    position: 'top-end',
+                    icon: 'success',
+                    title: ("Agregaste " + product.nombre + " al carrito"),
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+                AgregarAlCarrito(product)
                 if (carritoenSS != null) {
-                     let total2 = cart.reduce((total2, item) => total2 + item.precio, 0);
-                     let total = total2
-                     console.log(total)
-                     totalCompra.innerText = ("Precio Total: AR$" + total)
-                     div.innerHTML = ``
-                    }
-                    else {
+                    let total2 = cart.reduce((total2, item) => total2 + item.precio, 0);
+                    let total = total2
+                    console.log(total)
+                    totalCompra.innerText = ("Precio Total: AR$" + total)
+                    div.innerHTML = ``
+                }
+                else {
                         let total2 = cart.reduce((total2, item) => total2 + item.precio, 0);
                         let total = total2
                         console.log(total)
@@ -44,23 +57,23 @@ function MostrarProductos() {
                         div.innerHTML = ``
                     }
                     
-                   showCart()
-                   })
-                     })
-                       }
-  MostrarProductos()
-  // Muestro carrito
-  let cartView = document.getElementById("showProductsCart")
+                    showCart()
+                })
+            })
+        }
+        MostrarProductos()
+        // Muestro carrito
+        let cartView = document.getElementById("showProductsCart")
  let goToCart = document.getElementById("goToCart")
  let carrito = document.getElementById("cartList")
  const buttonCart = document.getElementById("mostrarCarrito")
-                    
+ 
  let alertCart = document.createElement("h2")
  alertCart.setAttribute("class", "alerta")
-                    
-// if (cart = []) {
-//  alertCart.innerText = ("El carrito está vacío")
-//  div.append(alertCart)
+ 
+ // if (cart = []) {
+     //  alertCart.innerText = ("El carrito está vacío")
+     //  div.append(alertCart)
 //  }
 
 // Cargar items de elementos en Storage
@@ -104,6 +117,23 @@ deleteCart.innerText = ("Vaciar carrito")
 div2.append(deleteCart)
 
 deleteCart.onclick = () => {
+    Swal.fire({
+        showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+          },
+        position: 'center',
+        icon: 'success',
+        title: "El carrito se vació con éxito",
+        imageUrl: './IMG/carritoVacio.png',
+        imageWidth: 400,
+        imageHeight: 300,
+        imageAlt: 'Carrito Vacio',
+        showConfirmButton: false,
+        timer: 1000
+    })
     localStorage.clear(cart)
     cart = []
     div.innerHTML = ``
