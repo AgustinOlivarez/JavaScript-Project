@@ -13,6 +13,13 @@ const AgregarAlCarrito = (product) => {
 }
 
 // Funcion mostrar productos
+fetch ("./products.json")
+.then (response => console.log(response))
+.then (productos => {
+    console.log(productos)
+    MostrarProductos()
+})
+.catch(error => console.error(error))
 function MostrarProductos() {
     productos.forEach((product) => {
         let card = document.createElement("div")
