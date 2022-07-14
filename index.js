@@ -13,68 +13,70 @@ const AgregarAlCarrito = (product) => {
 }
 
 // Funcion mostrar productos
-fetch ("./products.json")
-.then (response => console.log(response))
-.then (productos => {
-    console.log(productos)
-    MostrarProductos()
-})
-.catch(error => console.error(error))
+// .catch(error => console.error(error))
+
 function MostrarProductos() {
-    productos.forEach((product) => {
-        let card = document.createElement("div")
-        showAllProducts.append(card)
-        let img = document.createElement("img")
-        img.setAttribute("src", product.img)
-        let name = document.createElement("h3")
-        name.innerText = (product.nombre)
-        let price = document.createElement("p")
-        price.innerText = ("AR$" + product.precio)
-        let buyButton = document.createElement("button")
-        buyButton.innerText = ("Agregar al carrito")
-        card.append(img, name, price, buyButton)
+    fetch ("./products.json")
+    .then (response => response.json())
+    .then (data => {
+        console.log(data)
+        let productos = data
         
+        productos.forEach((product) => {
+            let card = document.createElement("div")
+            showAllProducts.append(card)
+            let img = document.createElement("img")
+            img.setAttribute("src", product.img)
+            let name = document.createElement("h3")
+            name.innerText = (product.nombre)
+            let price = document.createElement("p")
+            price.innerText = ("AR$" + product.precio)
+            let buyButton = document.createElement("button")
+            buyButton.innerText = ("Agregar al carrito")
+            card.append(img, name, price, buyButton)
+            
             buyButton.addEventListener("click", () => {
-                Swal.fire({
-                    showClass: {
-                        popup: 'animate__animated animate__fadeInDown'
-                      },
-                      hideClass: {
-                        popup: 'animate__animated animate__fadeOutUp'
-                      },
-                    position: 'top-end',
-                    icon: 'success',
-                    title: ("Agregaste " + product.nombre + " al carrito"),
-                    showConfirmButton: false,
-                    timer: 1000
-                })
-                AgregarAlCarrito(product)
-                if (carritoenSS != null) {
-                    let total2 = cart.reduce((total2, item) => total2 + item.precio, 0);
-                    let total = total2
-                    console.log(total)
-                    totalCompra.innerText = ("Precio Total: AR$" + total)
-                    div.innerHTML = ``
-                }
-                else {
-                        let total2 = cart.reduce((total2, item) => total2 + item.precio, 0);
-                        let total = total2
-                        console.log(total)
-                        totalCompra.innerText = ("Precio Total: AR$" + total2)
-                        div.innerHTML = ``
-                    }
-                    
-                    showCart()
-                })
+            Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                position: 'top-end',
+                icon: 'success',
+                title: ("Agregaste " + product.nombre + " al carrito"),
+                showConfirmButton: false,
+                timer: 1000
             })
-        }
-        MostrarProductos()
-        // Muestro carrito
-        let cartView = document.getElementById("showProductsCart")
- let goToCart = document.getElementById("goToCart")
- let carrito = document.getElementById("cartList")
- const buttonCart = document.getElementById("mostrarCarrito")
- 
+            AgregarAlCarrito(product)
+            if (carritoenSS != null) {
+                let total2 = cart.reduce((total2, item) => total2 + item.precio, 0);
+                let total = total2
+                console.log(total)
+                totalCompra.innerText = ("Precio Total: AR$" + total)
+                div.innerHTML = ``
+            }
+            else {
+                let total2 = cart.reduce((total2, item) => total2 + item.precio, 0);
+                let total = total2
+                console.log(total)
+                totalCompra.innerText = ("Precio Total: AR$" + total2)
+                div.innerHTML = ``
+            }
+            
+            showCart()
+        })
+    })
+})
+}
+MostrarProductos()
+// Muestro carrito
+let cartView = document.getElementById("showProductsCart")
+let goToCart = document.getElementById("goToCart")
+let carrito = document.getElementById("cartList")
+const buttonCart = document.getElementById("mostrarCarrito")
+
  let alertCart = document.createElement("h2")
  alertCart.setAttribute("class", "alerta")
  
