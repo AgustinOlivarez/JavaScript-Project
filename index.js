@@ -13,13 +13,11 @@ const AgregarAlCarrito = (product) => {
 }
 
 // Funcion mostrar productos
-// .catch(error => console.error(error))
 
 function MostrarProductos() {
     fetch ("./products.json")
     .then (response => response.json())
     .then (data => {
-        console.log(data)
         let productos = data
         
         productos.forEach((product) => {
@@ -84,8 +82,8 @@ const buttonCart = document.getElementById("mostrarCarrito")
 // Cargar items de elementos en Storage
 function LoadStorage(){
 
-            const totalSS = carritoenSS.reduce((totalSS, item) => totalSS + item.precio, 0);
-            totalCompra.innerText = ("Precio Total: AR$" + totalSS)
+            const totalLS = carritoenSS.reduce((totalLS, item) => totalLS + item.precio, 0);
+            totalCompra.innerText = ("Precio Total: AR$" + totalLS)
             div.innerHTML = ``
             
         
@@ -111,7 +109,11 @@ function showCart() {
         })
     }
         // Eliminar item del carrito  (SIN HACER)
-let eliminarItem = document.querySelector(".eliminar")
+        let eliminarItem = document.querySelector(".eliminar")
+function EliminarItem() {
+    const EliminarClicked = event.target;
+    EliminarClicked.closest('li').remove();
+}
 
    
 
@@ -142,7 +144,6 @@ deleteCart.onclick = () => {
     localStorage.clear(cart)
     cart = []
     div.innerHTML = ``
-    console.log(cart)
     let total = 0
     totalCompra.innerText = ("Precio Total: AR$" + total)
     
