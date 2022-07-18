@@ -3,25 +3,35 @@
     color: white;
  }
  header {
-    margin: auto;
-    text-align: center;
-    font-size: 20px;
-    display: flex;
-    justify-content: space-between;
-    background: black;
-  }
-  
- .header__img {
-    width: 250px;
-    height: 200px;
-    margin: 5px;
-  }
-  .header__leyenda {
-    color:#3c2d8c
-  }
- .header__leyenda--container {
-    padding: 30px;
-  }
+	background: center url(./IMG/crazy\ drinks\ logo.jpg);
+    	text-align: center;
+	width: 100%;
+	height: 500px;
+	background-size: cover;
+	background-attachment: fixed;
+	position: relative;
+	overflow: hidden;
+	border-radius: 0 0 85% 85% / 30%;
+}
+header .overlay{
+	width: 100%;
+	height: 100%;
+	padding: 50px;
+	color: #FFF;
+	text-shadow: 1px 1px 1px #333;
+}
+.header__leyenda{
+    font-family: "Dank Mono", ui-monospace, monospace;
+}
+header h1{
+  font-size: 80px;
+ margin-bottom: 30px;
+}
+header h3{
+    font-family: "Dank Mono", ui-monospace, monospace;
+    font-size: 30px;
+}
+
 li a {
     font-family: "Dank Mono", ui-monospace, monospace;
 }
@@ -42,7 +52,7 @@ section{
 #showAllProducts div{
     display: grid;
     grid-template-rows:70% 12% 8% 10% ;
-    border: solid 5px #3c2d8c;
+    border: solid 5px black;
     padding: 2px;
     width: 23%;
     text-align: center;

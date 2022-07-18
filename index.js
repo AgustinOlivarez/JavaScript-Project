@@ -1,4 +1,4 @@
-let carritoenSS = JSON.parse(localStorage.getItem('cart'))
+let carritoenLS = JSON.parse(localStorage.getItem('cart'))
 let showAllProducts = document.getElementById("showAllProducts")
 const div = document.querySelector('.div')
 const div2 = document.querySelector(`#cartList`)
@@ -11,6 +11,7 @@ const AgregarAlCarrito = (product) => {
     console.log(cart)
     console.log(JSON.parse(localStorage.getItem('cart')));
 }
+
 
 // Funcion mostrar productos
 
@@ -48,18 +49,23 @@ function MostrarProductos() {
                 timer: 1000
             })
             AgregarAlCarrito(product)
-            if (carritoenSS != null) {
+            if (carritoenLS != null) {
+
+                     let cantidadInput = 1
+                     let total2 = cart.reduce((total2, item) => total2 + (item.precio*cantidadInput), 0);
+                     let total = total2
+                     console.log(total)
+                     totalCompra.innerText = ("Precio Total: AR$" + total)
+                     div.innerHTML = ``
+                }
+
+            
+            else {
+
                 let total2 = cart.reduce((total2, item) => total2 + item.precio, 0);
                 let total = total2
                 console.log(total)
                 totalCompra.innerText = ("Precio Total: AR$" + total)
-                div.innerHTML = ``
-            }
-            else {
-                let total2 = cart.reduce((total2, item) => total2 + item.precio, 0);
-                let total = total2
-                console.log(total)
-                totalCompra.innerText = ("Precio Total: AR$" + total2)
                 div.innerHTML = ``
             }
             
@@ -79,10 +85,10 @@ const buttonCart = document.getElementById("mostrarCarrito")
  alertCart.setAttribute("class", "alerta")
  
 
-// Cargar items de elementos en Storage
+// Cargar items de elementos y total en Storage
 function LoadStorage(){
 
-            const totalLS = carritoenSS.reduce((totalLS, item) => totalLS + item.precio, 0);
+            const totalLS = carritoenLS.reduce((totalLS, item) => totalLS + item.precio, 0);
             totalCompra.innerText = ("Precio Total: AR$" + totalLS)
             div.innerHTML = ``
             
@@ -90,29 +96,46 @@ function LoadStorage(){
         showCart()
     
     }
-    carritoenSS != null &&  LoadStorage()
+    carritoenLS != null &&  LoadStorage()
 
 
 
 
 function showCart() {
-    alertCart.remove()
-    cart.forEach(({id, nombre, precio, img, cantidad}) => {
-        const divCart = document.createElement('li')
-        divCart.innerHTML += ` 
-        <img src="${img}">
+
+
+        cart.forEach(({id, nombre, precio, img}) => {
+            const divCart = document.createElement('li')
+            divCart.setAttribute = ("class", "producto")
+            divCart.innerHTML += ` 
+            <img src="${img}">
             <h3>${nombre}</h3>
-            <h3>$${precio}</h3>
-            <h3>Cantidad: ${cantidad}</h3>
+            <h3 id="precio">$${precio}</h3>
+            <input id ="cantidad" type="number" placeholder="Cantidad" value="1"></input>
             <button class="eliminar" data-id=${id}>X</button>`
             div.appendChild(divCart)
         })
+    
+}
+        // Funcion cantidad
+        const cantidadInput = document.querySelector('#cantidad')
+        if (cantidadInput != null) {
+        cantidadInput.addEventListener('change', CambioCantidad)
+    }
+    function CambioCantidad() {
+        cantidad.value <= 0 ? (document.getElementById('cantidad').value = 1) : null
+        console.log('cambio de cantidad')
+        console.log(cantidad.value)
+        if (cantidad.value >1) {
+          
+        }
     }
         // Eliminar item del carrito  (SIN HACER)
         let eliminarItem = document.querySelector(".eliminar")
-function EliminarItem() {
+        eliminarItem.addEventListener('click',EliminarItem)
+function EliminarItem(event) {
     const EliminarClicked = event.target;
-    EliminarClicked.closest('li').remove();
+    EliminarClicked.closest('.item').remove;
 }
 
    
@@ -156,7 +179,16 @@ showCart()
 }
 
 // Filtrar resultados
-let InputSearch = document.getElementById("InputSearch")
 let filtrar = document.getElementById("filtrar")
-
+filtrar.onclick  = () => {
+    let Input = document.getElementById("InputSearch").value;
+    fetch ("./products.json")
+    .then (response => response.json())
+    .then (data => {
+        let productos = data
+     let filtro = productos.filter(InputSearch => InputSearch.value == productos.tipo);
+     console.log(filtro)
+     console.log(Input)
+     alert(InputSearch.value)
+})}
 // terminar filtrado
