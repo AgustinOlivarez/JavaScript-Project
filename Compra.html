@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Formulario de Compra</title>
+</head>
+<body>
+  <header class="animate__animated animate__backInLeft" class="titulo">
+    <div class="overlay">
+      <div class="header__leyenda--container">
+        <h1 class="header__leyenda">Crazy Drinks</h1>
+        <h4 class="header__leyenda">
+          ¡Tus bebidas a toda hora en todo lugar!
+        </h4>
+      </div>
+    </header>
+   <h1>Información de compra</h1>   
+   <h4>Complete los siguientes datos:</h4>
+   <form>
+    <div class="form-row">
+      <div class="col-3">
+        <input type="text" id="nombre"class="form-control" placeholder="Nombre y Apellido" required>
+      </div>
+      <div class="col-3">
+        <input type="text" id="direccion"class="form-control" placeholder="Dirección (solo CABA)" required>
+      </div>
+      <div class="col-3">
+        <input type="number"id="telefono" class="form-control" placeholder="Numero de telefono" required>
+      </div>
+      <div class="col-3">
+        <input type="text"id="email" class="form-control" placeholder="Email" required>
+      </div>
+    </div>
+      <div>
+        <h3>Seleccione método de pago:</h3>
+    </div>
+    <div>
+          <input type="radio" id="efectivo">Efectivo
+        <input type="radio" id="transferencia">Transferencia
+    </div>
+
+    <input id="confirmar" type="submit" value="Confirmar">
+  </form>
+</body>
+</html>

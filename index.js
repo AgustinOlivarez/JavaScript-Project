@@ -5,13 +5,28 @@ const div2 = document.querySelector(`#cartList`);
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 const AgregarAlCarrito = (product) => {
-  let id= product.id;
+  let id = product.id;
   console.log(id);
-  cart = [...cart, product];
-  localStorage.setItem("cart", JSON.stringify(cart));
-  console.log(cart);
-  console.log(JSON.parse(localStorage.getItem("cart")));
-
+  for (let i = 0; i < cart.length; i++) {
+    if (id === cart[i].id) {
+      console.log("Item se repite");
+      product.cantidad++;
+    }
+    // if (id != cart[i].id) {
+    //   product.cantidad= 1
+    //   console.log('sigo vivo');
+    //   cart = [...cart, product];
+    //   localStorage.setItem("cart", JSON.stringify(cart));
+    //   console.log(cart);
+    //   console.log(JSON.parse(localStorage.getItem("cart")));
+    // }
+  }
+  if (product.cantidad === 1) {
+    cart = [...cart, product];
+    localStorage.setItem("cart", JSON.stringify(cart));
+    console.log(cart);
+    console.log(JSON.parse(localStorage.getItem("cart")));
+  }
 };
 
 // Funcion mostrar productos
@@ -52,10 +67,7 @@ function MostrarProductos() {
           AgregarAlCarrito(product);
           if (carritoenLS != null) {
             let cantidadInput = 1;
-            let total2 = cart.reduce(
-              (total2, item) => total2 + item.precio * cantidadInput,
-              0
-            );
+            let total2 = cart.reduce((total2, item) => total2 + item.precio * cantidadInput,0);
             let total = total2;
             console.log(total);
             totalCompra.innerText = "Precio Total: AR$" + total;
@@ -67,12 +79,12 @@ function MostrarProductos() {
             totalCompra.innerText = "Precio Total: AR$" + total;
             div.innerHTML = ``;
           }
-
           showCart();
         });
       });
     });
 }
+
 MostrarProductos();
 // Muestro carrito
 let cartView = document.getElementById("showProductsCart");
@@ -96,43 +108,44 @@ function LoadStorage() {
 }
 carritoenLS != null && LoadStorage();
 
+// function cartTotal() {
+//   let total = 0;
+//   cart.forEach(({precio}) =>{
+
+//     const itemCantidad = parseInt(div.querySelector('#cantidad').value);
+//     total = total + precio*itemCantidad;
+//     totalCompra.innerText = "Precio Total: AR$" + total;
+//     div.innerHTML = ``;
+//   })
+// }
 function showCart() {
-  cart.forEach(({ id, nombre, precio, img , cantidad}) => {
+  cart.forEach(({ id, nombre, precio, img, cantidad }) => {
     const divCart = document.createElement("li");
     divCart.setAttribute = ("class", "producto");
     divCart.innerHTML += ` 
-            <img src="${img}">
-            <h3>${nombre}</h3>
-            <h3 id="precio">AR$${precio}</h3>
-            <input id ="cantidad" type="number" placeholder="Cantidad" value="${cantidad}" ></input>
-            <button class=" btn btn-danger eliminar" data=${id}>X</button>`;
+      <img class="imagenProducto"src="${img}">
+      <h3 class="producto"">${nombre}</h3>
+      <h3 id="precio">AR$${precio}</h3>
+      <div class="itemcantidad">
+      <input id ="cantidad" type="number" placeholder="Cantidad" value="${cantidad}" ></input>
+      </div>
+      <div class="itemeliminar">
+      <button class=" btn btn-danger eliminar" data=${id}>X</button>
+      </div>`;
     div.appendChild(divCart);
+
+    let eliminarItem = document.getElementsByClassName("eliminar");
+    for (let b of eliminarItem) {
+      b.addEventListener("click", (e) => {
+        cart = cart.filter((p) => p.id != b.getAttribute("data"));
+        localStorage.setItem("cart", JSON.stringify(cart));
+        div.innerHTML = "";
+        showCart();
+        console.log(cart);
+      });
+    }
   });
 }
-// Funcion cantidad
-// const cantidadInput = document.getElementById("cantidad");
-// if (cantidadInput != null) {
-//   cantidadInput.addEventListener("change", CambioCantidad);
-// }
-// function CambioCantidad() {
-//   cantidad.value <= 0 ? (document.getElementById("cantidad").value = 1) : null;
-//   console.log("cambio de cantidad");
-//   console.log(cantidad.value);
-//   if (cantidad.value > 1) {
-//   }
-// }
-// Eliminar item del carrito  (SIN HACER)
-// eliminarItem.addEventListener('click',EliminarItem)
-let eliminarItem = document.getElementsByClassName("eliminar");
-let eliminarItemData = document.getElementsByClassName("eliminar").data;
-    for (let b of eliminarItem) {
-        b.addEventListener("click", e => {
-            console.log('click');
-            cart = cart.filter((product) => product.id != b.data);
-            console.log(cart);
-        })
-    }
-
 
 //Vaciar todo el carrito //
 let deleteCart = document.createElement("button");
@@ -170,20 +183,3 @@ buttonCart.onclick = () => {
   showCart();
 };
 
-// Filtrar resultados
-let filtrar = document.getElementById("filtrar");
-filtrar.onclick = () => {
-  let Input = document.getElementById("InputSearch").value;
-  fetch("./products.json")
-    .then((response) => response.json())
-    .then((data) => {
-      let productos = data;
-      let filtro = productos.filter(
-        (InputSearch) => InputSearch.value == productos.tipo
-      );
-      console.log(filtro);
-      console.log(Input);
-      alert(InputSearch.value);
-    });
-};
-// terminar filtrado

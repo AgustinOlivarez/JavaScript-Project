@@ -58,6 +58,55 @@
         "img": "./IMG/6Packandesnegra.png",
         "cantidad": 1,
         "tipo": "ceveza"   
+    },
+    {
+        "id": "9",
+        "nombre": "Combo 9: (Botella Red Label 750ml)",
+        "precio": 3000,
+        "img": "./IMG/Redlabel.jpeg",
+        "cantidad": 1
+    },
+    {
+        "id": "10",
+        "nombre": "Combo 10: (Botella Blue Label 750ml)",
+        "precio": 56500,
+        "img": "./IMG/Bluelabel.jpeg",
+        "cantidad": 1
+     },
+    {
+        "id": "11",
+        "nombre": "Combo 11: (Botella Black Label 750ml)",
+        "precio": 6500,
+        "img": "./IMG/Blacklabel.jpeg",
+        "cantidad": 1
+    },
+    {
+        "id": "12",
+        "nombre": "Combo 12: (1 Campari + 2 Jugos Citric Naranja)",
+        "precio": 1700,
+        "img": "./IMG/Campari y Jugo.jpg",
+        "cantidad": 1
+    },
+    {
+        "id": "13",
+        "nombre": "Combo 13: (Botella de Jagger + 4 latas RedBull 250ml)",
+        "precio": 5500,
+        "img": "./IMG/JaggeryRedbull.png",
+        "cantidad": 1
+    },
+    {
+        "id": "14",
+        "nombre": "Combo 14: (Tequila Sol Azteca 1L)",
+        "precio": 1400,
+        "img": "./IMG/Tequila.png",
+        "cantidad": 1
+    },
+    {
+        "id": "15",
+        "nombre": "Combo 15: (Botella de Malibu + 2 Jugos cepita 1L)",
+        "precio": 2700,
+        "img": "./IMG/MalibuyJugo.png",
+        "cantidad": 1
     }
 
 ]
