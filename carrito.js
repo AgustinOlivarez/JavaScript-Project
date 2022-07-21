@@ -1,5 +1,5 @@
 let carritoenLS = JSON.parse(localStorage.getItem("cart"));
-const div = document.querySelector(".div");
+const divCart = document.querySelector(".divCart");
 const div2 = document.querySelector(`#cartList`);
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -13,33 +13,33 @@ function LoadStorage() {
     0
   );
   totalCompra.innerText = "Precio Total: AR$" + totalLS;
-  div.innerHTML = ``;
+  divCart.innerHTML = ``;
 
   showCart();
 }
 carritoenLS != null && LoadStorage();
 function showCart() {
+  divCart.innerHTML = ``;
   cart.forEach(({ id, nombre, precio, img, cantidad }) => {
-    const divCart = document.createElement("li");
-    divCart.setAttribute = ("class", "producto");
-    divCart.innerHTML += ` 
-        <img class="imagenProducto"src="${img}">
-        <h3 class="producto"">${nombre}</h3>
-        <h3 id="precio">AR$${precio}</h3>
-        <div class="itemcantidad">
-        <input id ="cantidad" type="number" placeholder="Cantidad" value="${cantidad}" ></input>
-        </div>
-        <div class="itemeliminar">
-        <button class=" btn btn-danger eliminar" data=${id}>X</button>
-        </div>`;
-    div.appendChild(divCart);
+    divCart.innerHTML += `
+    <li> 
+      <img class="imagenProducto"src="${img}">
+      <h3 class="producto"">${nombre}</h3>
+      <h3 id="precio">AR$${precio}</h3>
+      <div class="itemcantidad">
+      <input id ="cantidad" type="number" placeholder="Cantidad" value="${cantidad}" ></input>
+      </div>
+      <div class="itemeliminar">
+      <button class=" btn btn-danger eliminar" data=${id}>X</button>
+      </div>
+      </li>`;
 
     let eliminarItem = document.getElementsByClassName("eliminar");
     for (let b of eliminarItem) {
       b.addEventListener("click", (e) => {
         cart = cart.filter((p) => p.id != b.getAttribute("data"));
         localStorage.setItem("cart", JSON.stringify(cart));
-        div.innerHTML = "";
+        divCart.innerHTML = "";
         showCart();
         console.log(cart);
       });
@@ -72,12 +72,12 @@ deleteCart.onclick = () => {
   });
   localStorage.clear(cart);
   cart = [];
-  div.innerHTML = ``;
+  divCart.innerHTML = ``;
   let total = 0;
   totalCompra.innerText = "Precio Total: AR$" + total;
 };
 buttonCart.onclick = () => {
-  div.innerHTML = ``;
+  divCart.innerHTML = ``;
   showCart();
 };
 
@@ -89,6 +89,12 @@ buyButton.onclick = () => {
       icon: "error",
       title: "Oops...",
       text: "Parece que no hay nada en el carrito :c",
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
     });
   }
    else {

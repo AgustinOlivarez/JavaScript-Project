@@ -1,31 +1,26 @@
 let carritoenLS = JSON.parse(localStorage.getItem("cart"));
 let showAllProducts = document.getElementById("showAllProducts");
-const div = document.querySelector(".div");
+const divCart = document.querySelector(".divCart");
 const div2 = document.querySelector(`#cartList`);
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
 const AgregarAlCarrito = (product) => {
-  let id = product.id;
+  let id = product.id
   console.log(id);
   for (let i = 0; i < cart.length; i++) {
     if (id === cart[i].id) {
       console.log("Item se repite");
       product.cantidad++;
     }
-    // if (id != cart[i].id) {
-    //   product.cantidad= 1
-    //   console.log('sigo vivo');
-    //   cart = [...cart, product];
-    //   localStorage.setItem("cart", JSON.stringify(cart));
-    //   console.log(cart);
-    //   console.log(JSON.parse(localStorage.getItem("cart")));
-    // }
+
   }
   if (product.cantidad === 1) {
     cart = [...cart, product];
     localStorage.setItem("cart", JSON.stringify(cart));
     console.log(cart);
     console.log(JSON.parse(localStorage.getItem("cart")));
+    totalCompra.innerText = `Precio Total: AR$${cart.reduce((total, item) => total + item.precio, 0)}`
   }
 };
 
@@ -35,7 +30,7 @@ function MostrarProductos() {
   fetch("./products.json")
     .then((response) => response.json())
     .then((data) => {
-      let productos = data;
+      productos = data;
 
       productos.forEach((product) => {
         let card = document.createElement("div");
@@ -48,6 +43,8 @@ function MostrarProductos() {
         price.innerText = "AR$" + product.precio;
         let buyButton = document.createElement("button");
         buyButton.innerText = "Agregar al carrito";
+        buyButton.setAttribute("name",product.nombre);
+        buyButton.setAttribute("class","buyButton")
         card.append(img, name, price, buyButton);
 
         buyButton.addEventListener("click", () => {
@@ -64,22 +61,14 @@ function MostrarProductos() {
             showConfirmButton: false,
             timer: 1000,
           });
+          // let newProduct = productos.find(product => product.nombre == buyButton.getAttribute("data"));
+          // console.log(newProduct);
+          // newProduct.cantidad = 1;
+          // cart = [...cart, newProduct];
+          // totalCompra.innerText = `Precio Total: AR$${cart.reduce((total, item) => total + item.precio, 0)}`
           AgregarAlCarrito(product);
-          if (carritoenLS != null) {
-            let cantidadInput = 1;
-            let total2 = cart.reduce((total2, item) => total2 + item.precio * cantidadInput,0);
-            let total = total2;
-            console.log(total);
-            totalCompra.innerText = "Precio Total: AR$" + total;
-            div.innerHTML = ``;
-          } else {
-            let total2 = cart.reduce((total2, item) => total2 + item.precio, 0);
-            let total = total2;
-            console.log(total);
-            totalCompra.innerText = "Precio Total: AR$" + total;
-            div.innerHTML = ``;
-          }
           showCart();
+          console.log(cart)
         });
       });
     });
@@ -102,44 +91,36 @@ function LoadStorage() {
     0
   );
   totalCompra.innerText = "Precio Total: AR$" + totalLS;
-  div.innerHTML = ``;
+  divCart.innerHTML = ``;
 
   showCart();
 }
 carritoenLS != null && LoadStorage();
 
-// function cartTotal() {
-//   let total = 0;
-//   cart.forEach(({precio}) =>{
-
-//     const itemCantidad = parseInt(div.querySelector('#cantidad').value);
-//     total = total + precio*itemCantidad;
-//     totalCompra.innerText = "Precio Total: AR$" + total;
-//     div.innerHTML = ``;
-//   })
-// }
 function showCart() {
+  divCart.innerHTML = ``;
   cart.forEach(({ id, nombre, precio, img, cantidad }) => {
-    const divCart = document.createElement("li");
-    divCart.setAttribute = ("class", "producto");
-    divCart.innerHTML += ` 
+    divCart.innerHTML += `
+    <li> 
       <img class="imagenProducto"src="${img}">
       <h3 class="producto"">${nombre}</h3>
       <h3 id="precio">AR$${precio}</h3>
       <div class="itemcantidad">
-      <input id ="cantidad" type="number" placeholder="Cantidad" value="${cantidad}" ></input>
+      <input id ="cantidad" type="number" placeholder="Cantidad" value="1" data=${id}></input>
       </div>
       <div class="itemeliminar">
       <button class=" btn btn-danger eliminar" data=${id}>X</button>
-      </div>`;
-    div.appendChild(divCart);
+      </div>
+      </li>`;
+
 
     let eliminarItem = document.getElementsByClassName("eliminar");
     for (let b of eliminarItem) {
       b.addEventListener("click", (e) => {
         cart = cart.filter((p) => p.id != b.getAttribute("data"));
         localStorage.setItem("cart", JSON.stringify(cart));
-        div.innerHTML = "";
+        totalCompra.innerText = `Precio Total: AR$${cart.reduce((total, item) => total + item.precio, 0)}`
+        divCart.innerHTML = "";
         showCart();
         console.log(cart);
       });
@@ -173,13 +154,13 @@ deleteCart.onclick = () => {
   });
   localStorage.clear(cart);
   cart = [];
-  div.innerHTML = ``;
+  divCart.innerHTML = ``;
   let total = 0;
   totalCompra.innerText = "Precio Total: AR$" + total;
 };
 
 buttonCart.onclick = () => {
-  div.innerHTML = ``;
+  divCart.innerHTML = ``;
   showCart();
 };
 
