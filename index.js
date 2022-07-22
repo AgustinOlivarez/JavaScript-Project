@@ -4,27 +4,25 @@ const divCart = document.querySelector(".divCart");
 const div2 = document.querySelector(`#cartList`);
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
+// Agregar al carrito verifica que el item exista en el carrito y en base a eso modifica la cantidad o crea una copia del item al carrito agregando propiedad cantidad
 const AgregarAlCarrito = (product) => {
-  let id = product.id
-  console.log(id);
-  for (let i = 0; i < cart.length; i++) {
-    if (id === cart[i].id) {
-      console.log("Item se repite");
-      product.cantidad++;
-    }
-
-  }
-  if (product.cantidad === 1) {
-    cart = [...cart, product];
+  // ESTÁ EL PRODUCTO YA EN EL CARRITO?
+  let newProduct = cart.find(p => p.id == product.id);
+  if(newProduct == undefined){
+    // NO: LE AGREGO LA PROPIEDAD CANTIDAD Y LO AGREGO AL ARRAY
+    newProduct = product;
+    newProduct.cantidad = 1;
+    cart.push(newProduct);
     localStorage.setItem("cart", JSON.stringify(cart));
-    console.log(cart);
-    console.log(JSON.parse(localStorage.getItem("cart")));
-    totalCompra.innerText = `Precio Total: AR$${cart.reduce((total, item) => total + item.precio, 0)}`
+    totalCompra.innerText = `Precio Total: AR$${cart.reduce((total, item) => total + (item.precio * item.cantidad), 0)}`
+  } else{
+    // Si: LE SUMO 1 A CANTIDAD
+    cart[cart.findIndex(p => p.id == product.id)].cantidad++;
+    localStorage.setItem("cart", JSON.stringify(cart));
+    totalCompra.innerText = `Precio Total: AR$${cart.reduce((total, item) => total + (item.precio * item.cantidad), 0)}`
   }
 };
-
-// Funcion mostrar productos
+// Funcion mostrar productos crea la card de los productos del catalogo cargando la info del archivo.json
 
 function MostrarProductos() {
   fetch("./products.json")
@@ -44,7 +42,7 @@ function MostrarProductos() {
         let buyButton = document.createElement("button");
         buyButton.innerText = "Agregar al carrito";
         buyButton.setAttribute("name",product.nombre);
-        buyButton.setAttribute("class","buyButton")
+        buyButton.setAttribute("class","buyButton");
         card.append(img, name, price, buyButton);
 
         buyButton.addEventListener("click", () => {
@@ -61,11 +59,6 @@ function MostrarProductos() {
             showConfirmButton: false,
             timer: 1000,
           });
-          // let newProduct = productos.find(product => product.nombre == buyButton.getAttribute("data"));
-          // console.log(newProduct);
-          // newProduct.cantidad = 1;
-          // cart = [...cart, newProduct];
-          // totalCompra.innerText = `Precio Total: AR$${cart.reduce((total, item) => total + item.precio, 0)}`
           AgregarAlCarrito(product);
           showCart();
           console.log(cart)
@@ -75,7 +68,6 @@ function MostrarProductos() {
 }
 
 MostrarProductos();
-// Muestro carrito
 let cartView = document.getElementById("showProductsCart");
 let goToCart = document.getElementById("goToCart");
 let carrito = document.getElementById("cartList");
@@ -96,7 +88,7 @@ function LoadStorage() {
   showCart();
 }
 carritoenLS != null && LoadStorage();
-
+// ShowCart genera el dom del carrito y las funcionalidades del input de cantidad y boton eliminar
 function showCart() {
   divCart.innerHTML = ``;
   cart.forEach(({ id, nombre, precio, img, cantidad }) => {
@@ -106,14 +98,29 @@ function showCart() {
       <h3 class="producto"">${nombre}</h3>
       <h3 id="precio">AR$${precio}</h3>
       <div class="itemcantidad">
-      <input id ="cantidad" type="number" placeholder="Cantidad" value="1" data=${id}></input>
+      <input class ="cantidadInput" type="number" placeholder="Cantidad" value=${cantidad} data=${id}></input>
       </div>
       <div class="itemeliminar">
       <button class=" btn btn-danger eliminar" data=${id}>X</button>
       </div>
       </li>`;
 
+     let InputCantidad = document.getElementsByClassName("cantidadInput");
+     for (let a of InputCantidad) {
+      a.addEventListener("change", (e) => {
+        if(a.value > 0){
+          cart[cart.findIndex(p => p.id == a.getAttribute("data"))].cantidad = a.value;
+          localStorage.setItem("cart", JSON.stringify(cart));
+          totalCompra.innerText = `Precio Total: AR$${cart.reduce((total, item) => total + (item.precio * item.cantidad), 0)}`
+        }
+        else{
+          cart[cart.findIndex(p => p.id == a.getAttribute("data"))].cantidad = 1;
+          a.value = 1;
+        }
 
+
+      })
+     }
     let eliminarItem = document.getElementsByClassName("eliminar");
     for (let b of eliminarItem) {
       b.addEventListener("click", (e) => {
@@ -158,7 +165,7 @@ deleteCart.onclick = () => {
   let total = 0;
   totalCompra.innerText = "Precio Total: AR$" + total;
 };
-
+// este boton hace que el carrito cargue en la otra seccion de la pagina
 buttonCart.onclick = () => {
   divCart.innerHTML = ``;
   showCart();

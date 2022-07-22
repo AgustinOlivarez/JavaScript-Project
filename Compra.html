@@ -21,8 +21,26 @@
         </h4>
       </div>
     </header>
-   <h1>Información de compra</h1>   
-   <h4>Complete los siguientes datos:</h4>
+   <h1>Información de compra</h1>
+   <h4>Tus productos:</h4>
+   <div class="showCart">
+    <div id="cartList">
+      <h3>Detalle de compra:</h3>
+      <div class="titulosCarrito">
+          <h4 class="liProducto">Producto</h4>
+          <h4 class="liPrecio">Precio</h4>
+          <h4 class="liCantidad">Cantidad</h4>
+      </div>
+      <div class="divCart">
+        
+      </div>
+        <h4 id="totalCompra">Precio Total : AR$</h4> 
+      </div>
+      </div>
+    <div class="CompleteDatos">
+      <h4>Complete los siguientes datos:</h4>
+    </div>
+
    <form>
     <div class="form-row">
       <div class="col-3">
@@ -32,7 +50,7 @@
         <input type="text" id="direccion"class="form-control" placeholder="Dirección (solo CABA)" required>
       </div>
       <div class="col-3">
-        <input type="number"id="telefono" class="form-control" placeholder="Numero de telefono" required>
+        <input type="text"id="telefono" class="form-control" placeholder="Numero de telefono" required>
       </div>
       <div class="col-3">
         <input type="text"id="email" class="form-control" placeholder="Email" required>
@@ -41,13 +59,16 @@
       <div>
         <h3>Seleccione método de pago:</h3>
     </div>
-    <div>
-          <input type="radio" id="efectivo">Efectivo
-        <input type="radio" id="transferencia">Transferencia
-    </div>
+    <div class="metodos">
+        <input type="radio" name="metodoPago" id="efectivo" required>Efectivo
+      <input type="radio" name="metodoPago" id="transferencia" required>Transferencia
+  </div>
+  <div class="confirmbutton">
+    <button class="button-33 confirmar" role="button">Comprar</button>
+  </div>
 
-    <input id="confirmar" type="submit" value="Confirmar">
   </form>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="/Compra.js"></script>
 </body>
 </html>

@@ -7,6 +7,7 @@ let cartView = document.getElementById("showProductsCart");
 let goToCart = document.getElementById("goToCart");
 let carrito = document.getElementById("cartList");
 const buttonCart = document.getElementById("mostrarCarrito");
+// en esta seccion cargo el storage nuevamente para poder usar los datos del carrito
 function LoadStorage() {
   const totalLS = carritoenLS.reduce(
     (totalLS, item) => totalLS + item.precio,
@@ -18,6 +19,7 @@ function LoadStorage() {
   showCart();
 }
 carritoenLS != null && LoadStorage();
+// en esta seccion defino de nuevo showcart para poder seguir viendo el carrito
 function showCart() {
   divCart.innerHTML = ``;
   cart.forEach(({ id, nombre, precio, img, cantidad }) => {
@@ -27,18 +29,35 @@ function showCart() {
       <h3 class="producto"">${nombre}</h3>
       <h3 id="precio">AR$${precio}</h3>
       <div class="itemcantidad">
-      <input id ="cantidad" type="number" placeholder="Cantidad" value="${cantidad}" ></input>
+      <input class ="cantidadInput" type="number" placeholder="Cantidad" value=${cantidad} data=${id}></input>
       </div>
       <div class="itemeliminar">
       <button class=" btn btn-danger eliminar" data=${id}>X</button>
       </div>
       </li>`;
 
+     let InputCantidad = document.getElementsByClassName("cantidadInput");
+     for (let a of InputCantidad) {
+      a.addEventListener("change", (e) => {
+        if(a.value > 0){
+          cart[cart.findIndex(p => p.id == a.getAttribute("data"))].cantidad = a.value;
+          localStorage.setItem("cart", JSON.stringify(cart));
+          totalCompra.innerText = `Precio Total: AR$${cart.reduce((total, item) => total + (item.precio * item.cantidad), 0)}`
+        }
+        else{
+          cart[cart.findIndex(p => p.id == a.getAttribute("data"))].cantidad = 1;
+          a.value = 1;
+        }
+
+
+      })
+     }
     let eliminarItem = document.getElementsByClassName("eliminar");
     for (let b of eliminarItem) {
       b.addEventListener("click", (e) => {
         cart = cart.filter((p) => p.id != b.getAttribute("data"));
         localStorage.setItem("cart", JSON.stringify(cart));
+        totalCompra.innerText = `Precio Total: AR$${cart.reduce((total, item) => total + item.precio, 0)}`
         divCart.innerHTML = "";
         showCart();
         console.log(cart);
@@ -81,6 +100,7 @@ buttonCart.onclick = () => {
   showCart();
 };
 
+// en este evento confirmo el carrito a comprar y redirige a pagina de compra, si no hay items salta alert
 let buyButton = document.getElementById("comprar");
 buyButton.onclick = () => {
   console.log("click");
